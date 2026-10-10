@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "User's display name"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "User's email address"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Account creation timestamp"
+        }
+      },
+      "required": ["name", "email", "createdAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Job application document",
+      "type": "object",
+      "properties": {
+        "company": {
+          "type": "string",
+          "description": "Company applied to"
+        },
+        "jobTitle": {
+          "type": "string",
+          "description": "Role or position title"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Applied", "Interview", "Offer", "Rejected"],
+          "description": "Current status of the application"
+        },
+        "dateApplied": {
+          "type": "string",
+          "description": "Date applied (YYYY-MM-DD)"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["company", "jobTitle", "status", "dateApplied", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profiles indexed by authentication UID"
+    },
+    "/users/{userId}/applications/{applicationId}": {
+      "schema": {
+        "$ref": "#/entities/Application"
+      },
+      "description": "Job applications tracked by the user"
+    }
+  }
+}
